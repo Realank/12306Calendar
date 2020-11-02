@@ -1,5 +1,5 @@
 import urllib
-from datetime import datetime
+from datetime import datetime, timedelta
 import mail
 import order
 import urllib.parse
@@ -57,14 +57,14 @@ def gen_ics(email, password):
     cal.add('prodid', '-//My calendar product//rlk.cn//')
     cal.add('version', '2.0')
     cal.add('summary', '乘车信息')
-    cal.add('X-WR-CALNAME', 'calendar_name')
+    cal.add('X-WR-CALNAME', '乘车信息')
     for o in orders:
         (number, date, summary, detail) = o
         time = datetime.strptime(date, '%Y年%m月%d日%H:%M')
         event = Event()
         event.add('summary', summary)
         event.add('dtstart', time)
-        event.add('dtend', time)
+        event.add('dtend', time + timedelta(minutes=30))
         event.add('description', detail)
         event.add('uid', number)
         create_time = datetime.today()
