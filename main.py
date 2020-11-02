@@ -39,7 +39,7 @@ def save_db(email, password):
         # print('INSERT INTO orders (email,number,date,summary,detail) VALUES (%s)' % data)
         cur.execute('INSERT INTO orders (email,number,date,summary,detail) VALUES (%s)' % data)
         cur.execute(sql)
-    cur.execute("SELECT date,summary,detail FROM orders")
+    cur.execute("SELECT number,date,summary,detail FROM orders")
     orders = cur.fetchall()
     con.commit()
     # 关闭游标
@@ -57,21 +57,27 @@ def gen_ics(email, password):
     cal.add('prodid', '-//My calendar product//rlk.cn//')
     cal.add('version', '2.0')
     cal.add('summary', '乘车信息')
+    cal.add('X-WR-CALNAME', 'calendar_name')
     for o in orders:
-        (date, summary, detail) = o
+        (number, date, summary, detail) = o
         time = datetime.strptime(date, '%Y年%m月%d日%H:%M')
         event = Event()
         event.add('summary', summary)
         event.add('dtstart', time)
         event.add('dtend', time)
         event.add('description', detail)
-        event.add('uid', 'same')
+        event.add('uid', number)
+        create_time = datetime.today()
+        event.add('create', create_time)
+        event.add('last-modified', create_time)
+        event.add('dtstamp', create_time)
+        event.add('sequence', "0")
         cal.add_component(event)
 
-    return cal.to_ical()
-    # f = open('example.ics', 'wb+')
-    # f.write(cal.to_ical())
-    # f.close()
+    # return cal.to_ical()
+    f = open('example.ics', 'wb+')
+    f.write(cal.to_ical())
+    f.close()
 
 
 class Handler(BaseHTTPRequestHandler):
