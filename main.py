@@ -74,10 +74,10 @@ def gen_ics(email, password):
         event.add('sequence', "0")
         cal.add_component(event)
 
-    # return cal.to_ical()
-    f = open('example.ics', 'wb+')
-    f.write(cal.to_ical())
-    f.close()
+    return cal.to_ical()
+    # f = open('example.ics', 'wb+')
+    # f.write(cal.to_ical())
+    # f.close()
 
 
 class Handler(BaseHTTPRequestHandler):
