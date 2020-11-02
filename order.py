@@ -46,7 +46,7 @@ def get_more(order):
     order.from_to = re.search(r'\uFF0C([\u4e00-\u9fa5]{2,10}-[\u4e00-\u9fa5]{2,10})\uFF0C', order.detail).group(1)
     order.train = re.search(r'\uFF0C([CGZTKDLYN]?[0-9]{1,4})\u6B21', order.detail).group(1)
     order.seat = re.search(r'[,\uFF0C]([0-9]{1,2}\u8F66[0-9ABCDEF]{1,3}\u53F7)', order.detail).group(1)
-    order.summary = (order.train + ' ' + order.seat + '(' + order.from_to + ')').replace('站', '')
+    order.summary = (order.train + ' ' + order.seat + ' ' + order.from_to).replace('站', '')
 
 
 def gen_order(subject, content):
