@@ -36,10 +36,7 @@ def get_detail(content, order):
         if (div.text.find('，检票口') >= 0 and div.text.find('票价') >= 0) or \
                 (div.text.find('，退票费') >= 0 and div.text.find('，应退票款') >= 0):
             order.detail = div.select('div')[0].text.strip()
-    try:
-        get_more(order)
-    except:
-        print('process order failed' + order.detail)
+    get_more(order)
 
 
 def get_more(order):
@@ -59,5 +56,8 @@ def gen_order(subject, content):
     order.type = gen_type(subject)
     # if order.type == 3:
     #     print(content)
-    get_detail(content, order)
-    return order
+    try:
+        get_detail(content, order)
+        return order
+    except:
+        return None

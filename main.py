@@ -24,7 +24,8 @@ def save_db(email, password):
         o = order.gen_order(m.subject, m.content)
         # print(str(
         #     o.type) + ' ' + o.name + ' ' + o.time_str + ' ' + o.number + ' ' + o.train + ' ' + o.seat + ' ' + o.from_to + ' ' + o.detail)
-
+        if o is None:
+            continue
         cur.execute("SELECT * FROM orders WHERE number='" + o.number + "'")
         same_order = cur.fetchone()
         if o.type == 1 and same_order:
