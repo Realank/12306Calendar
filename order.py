@@ -40,6 +40,8 @@ def get_detail(content, order):
 
 
 def get_more(order):
+    if order.detail is None:
+        return
     order.name = re.search(r'([\u4e00-\u9fa5]{2,4})\uFF0C', order.detail).group(1)
     order.time_str = re.search(r'[\u4e00-\u9fa5]+\uFF0C([\u4e00-\u9fa50-9:]+)\u5F00\uFF0C', order.detail).group(1)
     order.time = datetime.datetime.strptime(order.time_str, '%Y年%m月%d日%H:%M')
