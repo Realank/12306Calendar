@@ -100,5 +100,9 @@ class Handler(BaseHTTPRequestHandler):
 
 if __name__ == '__main__':
     server_address = ('', PORT)
-    httpd = HTTPServer(server_address, Handler)
-    httpd.serve_forever()
+    try:
+        httpd = HTTPServer(server_address, Handler)
+        httpd.serve_forever()
+    except:
+        print('some error')
+
